@@ -1,3 +1,6 @@
+import sys
+import time
+
 def fact (n):
   factValue = n
   if n > 1:
@@ -18,12 +21,34 @@ def f (n):
   return fact(int(n % 10)) + f(int(n / 10))
   
 def sf (n):
-  factSum = f(n)
-  sumOfFactSum = sumDigitsOfNumber(factSum)
-    
-  print(sumOfFactSum)
+  return sumDigitsOfNumber(f(n))
   
 def g (i):
-  pass
+  n = 1;
+  while sf(n) != i:
+    n += 1
+
+  return n
   
-sf(342)
+def sg (i):
+  return sumDigitsOfNumber(g(i))
+
+def performSumOfDigits (n, m):
+  sumOfDigits = 0
+  for i in range (1, n + 1):
+    sumOfDigits += sg(i)
+  
+  return sumOfDigits % m
+
+stdin = sys.stdin
+testCases = stdin.readline()
+
+for i in range (0, int(testCases)):
+  splitInput = stdin.readline().split(" ")
+  n = int(splitInput[0])
+  m = int(splitInput[1])
+  start = time.perf_counter()
+  sumOfDigits = performSumOfDigits(n, m)
+  end = time.perf_counter()
+  print(sumOfDigits)
+  print (start - end)
